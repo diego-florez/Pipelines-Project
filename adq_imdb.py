@@ -13,7 +13,6 @@ def get_imdb():
         soup = f.request(e)
         href = soup.find_all("href")
 
-
         lsts = [href for href in soup.select("td.titleColumn")]
         lsts = f.find_ids(lsts)
         both_lsts.append(lsts)
