@@ -1,27 +1,38 @@
 import requests
 import json
-import requests
 import os
 from dotenv import load_dotenv
 import re
 import base64
+import functions as f
 
 
 
-def getFromGithub(path,apiKey=""):
-    
-    url = f"http://www.omdbapi.com/?{path}apikey={apiKey}"
-    
-    res = requests.get(url)
-    
-    return res.json()
+def get_movie():
+    movie = f.get_api()
+    if movie["Response"] == "False":
+        print("The movie is not in the database or the name is not correct, please correct the name or try other movie")
+    else:
+        df_m = f.clean_movie(movie)
+        return df_m
 
 
+def get_ratings():
+    movie = f.get_api()
+    if movie["Response"] == "False":
+        print("The movie is not in the database or the name is not correct, please correct the name or try other movie")
+    else:
+        ratings = movie["Ratings"]
+        if ratings == []:
+            print("This movie doesn't have ratings yet")
+            return False
+        else:
+            df_r = f.clean_rating(ratings)
+            return df_r
 
-load_dotenv()
+df_m = get_movie()
+df_r = get_ratings()
 
-apiKey = os.getenv("omdbapi_key")
+print(df_m,"\n")
+print(df_r)
 
-movie = getFromGithub("t=The+Godfather&", apiKey=apiKey)
-
-ratings = movie["Ratings"]

@@ -2,19 +2,25 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import re
+import functions as f
 
 
-url = 'http://www.imdb.com/chart/top?ref_=nv_ch_250_4'
+def get_imdb():
+    url = ('http://www.imdb.com/chart/top?','https://www.imdb.com/chart/moviemeter/?')
+    both_lsts = []
 
-def get(url):
-    res = requests.get(url)
-    print(res.status_code, res.url)
+    for e in url:      
+        soup = f.request(e)
+        href = soup.find_all("href")
+
+
+        lsts = [href for href in soup.select("td.titleColumn")]
+        lsts = f.find_ids(lsts)
+        both_lsts.append(lsts)
     
-    return res.text
+    df_tp = pd.DataFrame({"top_movies": pd.Series(both_lsts[0]), "popular_movies": pd.Series(both_lsts[1])})
+    return df_tp
 
-res = get(url)
-soup = BeautifulSoup(res, "html.parser")
+df_tp = get_imdb()
 
-t = [e.text for e in soup.select("td.titleColumn")][0:3]
-
-print(t)
+print(df_tp)
