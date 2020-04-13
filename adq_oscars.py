@@ -6,21 +6,21 @@ import functions as f
 
 
 def get_oscars():
-    url = (f'https://www.imdb.com/event/ev0000003/{oscar}/1/?')
+    url = ('https://en.wikipedia.org/wiki/List_of_Academy_Award-winning_films')
 
-    soup = f.request(e)
+    soup = f.request(url)
     href = soup.find_all("href")
 
-    lsts = [href for href in soup.select("#center-3-react > div > div > div:nth-child(1) > h3")]
+    lsts = [href.text.strip("\n") for href in soup.select("table.wikitable td")]
+    title = lsts[0::4]
+    year = lsts[1::4]
+    awards = lsts[2::4]
+    nominations = lsts[3::4]
+    dic = {"title":title, "year":year, "awards":awards, "nominations":nominations}
+    df_oscars = pd.DataFrame(dic)
     
-    return lsts
+    return df_oscars
 
 
-def get_year():
-    lst = []
-    for oscar in range(2020,1929):
-        lst=get_oscars(oscar) 
-    return lst
-
-oscars = get_year()
+oscars = get_oscars()
 print(oscars)
