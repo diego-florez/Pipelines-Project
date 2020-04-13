@@ -7,7 +7,7 @@ import functions as f
 
 
 
-def pdf_generator():
+def pdf_generator(pdf):
     pdf = FPDF(format='letter', unit='in')
     pdf.l_margin = pdf.l_margin*4.0
     pdf.r_margin = pdf.r_margin*4.0
@@ -58,7 +58,3 @@ def pdf_generator():
     pdf.ln(0.25)
 
     pdf.output('../OUTPUT/report.pdf', 'F')
-
-
-pdf=pdf_generator()
-print(pdf)

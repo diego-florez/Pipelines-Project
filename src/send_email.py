@@ -4,7 +4,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import getpass
-import pdf
+from pdf import *
 import ssl
 import smtplib
 import os
@@ -31,7 +31,7 @@ def email_generator(movie):
         How are you?<br>
         Below you will find your requested info about the movie.<br>
         Also if you want more info, you can visit:<br>
-        <a href="https://www.imdb.com">Real Python</a> 
+        <a href="https://www.imdb.com">IMDB</a> 
         </p>
     </body>
     </html>
@@ -47,6 +47,8 @@ def email_generator(movie):
 
     # Add body and file to email
     message.attach(MIMEText(body, "plain"))
+    pdf = FPDF()
+    pdf = pdf_generator(pdf)
     filename = "../OUTPUT/report.pdf"
     # Open PDF file in binary mode
     with open(filename, "rb") as attachment:
