@@ -10,22 +10,22 @@ def ratings_plot():
 
     dfr = get_ratings()
 
-    fig, ax = plt.subplots(1,1)
-
-    x_pos = [i for i, _ in enumerate(dfr.Source)]
-
-    plt.bar(x_pos, dfr.Value, color='green')
-    plt.xlabel("Database")
-    plt.ylabel("Rating")
-    plt.title(f"{df_title} Ratins by Database")
-
-    fig = plt.xticks(x_pos, dfr.Source)
-
-    table(ax, np.round(dfr.describe(),2),loc="upper right",colWidths=[0.2, 0.2, 0.2])
+    fig, ax = plt.subplots(figsize=(10,6))
     
-    dfr.plot(ax=ax,use_index=(fig),xlim=(-1,6), ylim=(0, 1), legend=None)
+    plt.ylabel("Ratings")
+    plt.xlabel("Database")
+    plt.title(f"{df_title} Ratings by Database")
+
+    table(ax, np.round(dfr.describe(),2),loc="upper right",zorder=3,colWidths=[0.1, 0.1, 0.1])
+
+    ax2 = ax.twinx()
+    ax2.bar(dfr.Source, dfr.Value, color="green", alpha=0.5)
+    ax2.set_xticks(ax2.get_xticks())
 
     return plt.show()
+
+plot = ratings_plot()
+print(plot)
 
 plot = ratings_plot()
 print(plot)
