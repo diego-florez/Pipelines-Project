@@ -21,7 +21,7 @@
   ### Final Output:
   The final output is an html email with a PDF of enriched data.
 
-## 2. Step 2 - Description by steps
+## 2 - Description by steps
   ### Data sources:
   The basic data is obtained from http://www.omdbapi.com/. This is a free API which contains info about movies.
   The related data to enrich the basic one is obtained from https://www.imdb.com/ and                          https://en.wikipedia.org/wiki/List_of_Academy_Award-winning_films.
@@ -30,7 +30,7 @@
   ### Plot, pdf & email:
   Finally a plot, a PDF and email will be send to the address you specify.
   
-### 3. Step 3 - How it works
+## 3 - How it works
   a) You will have to create a key in the api --> http://www.omdbapi.com/apikey.aspx. And then save it in a .env file in a var called "omdbapi_key".
   
   b) It works with the command line. You will have to type python3 main.py -m 'the movie you want' (you can use -m or --movie).
